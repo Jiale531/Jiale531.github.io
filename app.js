@@ -33,73 +33,152 @@
     goal.addEventListener('change', renderDecision);
     renderDecision();
   }
-  if (!document.querySelector('[data-case-page]')) return;
-  const projects = window.PORTFOLIO_PROJECTS;
-  const id = new URLSearchParams(location.search).get('project');
-  const project = projects && Object.prototype.hasOwnProperty.call(projects, id) ? projects[id] : null;
-  if (!project) {
-    $('case-title').textContent = '选择一个项目';
-    $('case-summary').textContent = '此项目地址不存在。请从下方返回首页，选择 LensFocus 或掌上办公平台。';
-    $('case-notice').textContent = '没有加载任何项目内容，避免把无效地址误认为真实案例。';
-    return;
-  }
-  document.title = `${project.name} — Jiale531 / Case Study`;
-  $('case-number').textContent = `PROJECT ${project.number} / CASE FILE`;
-  $('case-title').textContent = project.name;
-  $('case-status').textContent = project.status;
-  $('case-role').textContent = project.role;
-  $('case-contribution').textContent = project.contribution;
-  const overrides = window.CASE_CONTENT[id];
-  function element(tag, className, text) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text !== undefined) node.textContent = text;
-    return node;
-  }
-  window.CASE_SECTIONS.forEach((schema, index) => {
-    const content = overrides[schema.id] || {};
-    const section = element('section', 'case-block'); section.id = schema.id;
-    const title = element('h2'); title.id = `${schema.id}-title`;
-    title.append(element('span', 'section-number', String(index + 1).padStart(2, '0')), document.createTextNode(schema.title));
-    section.setAttribute('aria-labelledby', title.id);
-    section.append(title, element('p', '', content.summary || schema.summary));
-    const details = element('details');
-    details.append(element('summary', '', '展开细节与依据'));
-    const body = element('div', 'detail-content'), list = element('dl');
-    schema.fields.forEach(label => {
-      const row = element('div'); row.append(element('dt', '', label), element('dd', '', content.fields?.[label] || '待补充')); list.append(row);
+})();
+
+/* Shared navigation, native image dialog, disclosures and progressive motion. */
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const header = document.querySelector('.site-header');
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = $('primary-nav');
+  if (header && toggle && nav) {
+    function setMenu(open, restoreFocus = false) {
+      header.toggleAttribute('data-menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.querySelector('span').textContent = open ? '−' : '＋';
+      if (restoreFocus) toggle.focus();
+    }
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+    nav.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
+    header.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { event.preventDefault(); setMenu(false, true); }
     });
-    body.append(list); details.append(body); section.append(details);
-    if (schema.id === 'prototype') {
-      const slot = element('div', 'evidence-slot');
-      slot.append(element('span', '', 'PROTOTYPE / 待补充'), document.createTextNode('尚未提供真实截图、流程或原型。不以装饰性界面替代产品证据。'));
-      section.append(slot);
-    }
-    $('case-sections').append(section);
-    const link = element('a', '', `${String(index + 1).padStart(2, '0')} ${schema.title}`); link.href = `#${schema.id}`; $('case-toc').append(link);
-  });
-  const next = projects[project.next];
-  $('next-project').href = `case-study.html?project=${project.next}`;
-  $('next-project').textContent = `下一个：${next.name} ↗`;
-  $('case-tools').hidden = false;
-  const detailNodes = [...document.querySelectorAll('.case-block details')];
-  function syncDetailsButton() {
-    const allOpen = detailNodes.every(detail => detail.open);
-    $('toggle-details').textContent = allOpen ? '收起全部细节' : '展开全部细节';
-    $('toggle-details').setAttribute('aria-expanded', String(allOpen));
+    const narrow = matchMedia('(max-width:650px)');
+    narrow.addEventListener('change', () => setMenu(false));
+    document.documentElement.classList.add('js');
   }
-  $('toggle-details').addEventListener('click', () => {
-    const shouldOpen = !detailNodes.every(detail => detail.open);
-    detailNodes.forEach(detail => { detail.open = shouldOpen; }); syncDetailsButton();
-  });
-  detailNodes.forEach(detail => detail.addEventListener('toggle', syncDetailsButton));
-  function navigateToHash() {
-    const target = document.getElementById(location.hash.slice(1));
-    if (target?.classList.contains('case-block')) {
-      target.querySelector('details').open = true;
-      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+  const panel = $('lab-panel');
+  function openHashTarget() {
+    if (panel && ['#lab','#decision'].includes(location.hash)) {
+      panel.open = true;
+      if (location.hash === '#decision') $('lab').scrollIntoView({behavior:'instant',block:'start'});
+    }
+    let hash;
+    try { hash = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    const target = document.getElementById(hash);
+    if (target?.matches('details.evidence-detail')) {
+      target.open = true; target.scrollIntoView({behavior:'instant',block:'start'});
     }
   }
-  window.addEventListener('hashchange', navigateToHash);
-  navigateToHash();
+  window.addEventListener('hashchange', openHashTarget);
+  openHashTarget();
+  // Same-hash links should reopen a panel that the visitor previously closed.
+  document.querySelectorAll('a[href="#lab"],a[href="#decision"]').forEach(link => link.addEventListener('click', () => { if(panel) panel.open = true; }));
+  const allDetails = [...document.querySelectorAll('.evidence-detail')];
+  const allToggle = $('toggle-details');
+  if (allToggle) {
+    const currentDetails=()=>allDetails.filter(detail=>!detail.closest('.case-section').hidden);
+    function sync() {
+      const allOpen = currentDetails().every(detail => detail.open);
+      allToggle.textContent = allOpen ? '收起本章细节' : '展开本章细节';
+      allToggle.setAttribute('aria-expanded', String(allOpen));
+      allDetails.forEach(detail => { detail.querySelector('summary span').textContent = detail.open ? '收起依据 −' : '展开依据 ＋'; });
+    }
+    allToggle.addEventListener('click', () => { const next=!currentDetails().every(detail=>detail.open); currentDetails().forEach(detail=>{detail.open=next;}); sync(); });
+    allDetails.forEach(detail=>detail.addEventListener('toggle',sync));
+    sync();
+  }
+  const dialog = $('media-dialog');
+  if (dialog && typeof dialog.showModal === 'function') {
+    const image=$('media-image'), stage=dialog.querySelector('.dialog-stage');
+    let sourceButton=null, zoom=1, fitWidth=0;
+    const steps=[1,1.5,2,3,4];
+    function applyZoom() {
+      if (!image.naturalWidth) return;
+      fitWidth = Math.min(stage.clientWidth, stage.clientHeight * image.naturalWidth / image.naturalHeight);
+      image.style.width = `${Math.max(1,fitWidth * zoom)}px`;
+      $('zoom-level').textContent=`${Math.round(zoom*100)}%`;
+      // Preserve a visible focus target when a zoom limit disables its button.
+      if ((zoom === steps[0] && document.activeElement === $('zoom-out')) ||
+          (zoom === steps[steps.length-1] && document.activeElement === $('zoom-in'))) {
+        $('zoom-reset').focus();
+      }
+      $('zoom-out').disabled=zoom===steps[0];
+      $('zoom-in').disabled=zoom===steps[steps.length-1];
+    }
+    function resetZoom() { zoom=1; applyZoom(); stage.scrollTop=0; stage.scrollLeft=0; }
+    image.addEventListener('load',resetZoom);
+    image.addEventListener('error',()=>{ $('media-description').textContent='图片加载失败。请检查素材路径，或稍后重试。'; });
+    document.querySelectorAll('[data-media-src]').forEach(button=>button.addEventListener('click',()=>{
+      sourceButton=button; zoom=1;
+      $('media-title').textContent=button.dataset.mediaTitle;
+      $('media-description').textContent=button.dataset.mediaCaption;
+      image.alt=button.querySelector('img').alt;
+      image.removeAttribute('style');
+      image.src=button.dataset.mediaSrc;
+      dialog.showModal();
+      $('close-media').focus();
+      if(image.complete && image.naturalWidth)resetZoom();
+    }));
+    $('close-media').addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('keydown',event=>{
+      if (event.key !== 'Tab') return;
+      const stops=[...dialog.querySelectorAll('button:not(:disabled),[tabindex="0"]')];
+      const first=stops[0], last=stops[stops.length-1];
+      if (event.shiftKey && document.activeElement===first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement===last) { event.preventDefault(); first.focus(); }
+    });
+    dialog.addEventListener('close',()=>{ if(sourceButton?.isConnected)sourceButton.focus({preventScroll:true}); });
+    dialog.addEventListener('click',event=>{
+      if(event.target!==dialog)return;
+      const bounds=dialog.getBoundingClientRect();
+      if(event.clientX<bounds.left || event.clientX>bounds.right || event.clientY<bounds.top || event.clientY>bounds.bottom)dialog.close();
+    });
+    $('zoom-in').addEventListener('click',()=>{zoom=steps[Math.min(steps.indexOf(zoom)+1,steps.length-1)];applyZoom();});
+    $('zoom-out').addEventListener('click',()=>{zoom=steps[Math.max(steps.indexOf(zoom)-1,0)];applyZoom();});
+    $('zoom-reset').addEventListener('click',resetZoom);
+    window.addEventListener('resize',()=>{if(dialog.open)applyZoom();});
+  }
+  // Never hide content while waiting for a scroll observer or an animation.
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  if ('IntersectionObserver' in window && !reducedMotion.matches && innerWidth>650) {
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        if(!reducedMotion.matches) entry.target.animate([{opacity:.65,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:220,easing:'ease-out'});
+        observer.unobserve(entry.target);
+      });
+    },{threshold:.15});
+    document.querySelectorAll('.section-heading,.case-section-heading').forEach(node=>observer.observe(node));
+  }
+})();
+/* Compact routes: a case is a sequence of destinations, not one long page. */
+(() => {
+  const page=document.body.dataset.page;
+  if(page==='home' && ['#decision','#lab'].includes(location.hash)) { location.replace('lab.html'); return; }
+  if(page==='home' && location.hash==='#about') { location.replace('about.html'); return; }
+  if(page==='lab') document.getElementById('lab-panel').open=true;
+  const chapters=[...document.querySelectorAll('#case-evidence > .case-section')];
+  if(!chapters.length)return;
+  const links=[...document.querySelectorAll('.case-subnav a')];
+  const body=document.querySelector('.case-body');
+  const pager=document.createElement('nav');pager.className='chapter-pager';pager.setAttribute('aria-label','案例章节翻页');body.insertBefore(pager,body.querySelector('.next-project'));
+  function showChapter(){
+    let hash='';try{hash=decodeURIComponent(location.hash.slice(1));}catch{}
+    const target=document.getElementById(hash);
+    const requested=target?.closest('.case-section')?.id || new URLSearchParams(location.search).get('section') || 'overview-section';
+    const active=chapters.find(chapter=>chapter.id===requested)||chapters[0];
+    chapters.forEach(chapter=>{chapter.hidden=chapter!==active;});
+    document.body.classList.add('case-reader');document.body.classList.toggle('chapter-overview',active===chapters[0]);
+    links.forEach(link=>{if(new URL(link.href).searchParams.get('section')===active.id)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
+    const index=chapters.indexOf(active);pager.replaceChildren();
+    for(const [offset,label] of [[-1,'← Previous chapter'],[1,'Next chapter →']]){
+      const next=links[index+offset];const item=document.createElement(next?'a':'span');item.textContent=label;if(next)item.href=next.href;pager.append(item);
+    }
+    const details=active.querySelector('.evidence-detail');if(details)details.dispatchEvent(new Event('toggle'));
+    if(target?.matches('.evidence-detail')){target.open=true;target.scrollIntoView({behavior:'instant',block:'start'});}
+  }
+  showChapter();window.addEventListener('hashchange',showChapter);
 })();

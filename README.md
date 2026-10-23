@@ -1,73 +1,96 @@
-# Jiale531 / AI Product Lab
+# Jiale531 / Product Portfolio
 
 在线地址：https://jiale531.github.io/
 
-纯 HTML、CSS、JavaScript 的交互作品集，无框架、无打包步骤、无第三方运行时或字体依赖。GitHub Pages 保持从 `main` 分支根目录部署，保留 `.nojekyll`。
+现代、紧凑的多页面产品作品集。纯 HTML / CSS / JavaScript，无框架、无 npm 依赖、无外部字体。GitHub Pages 继续从 `main` 根目录发布，不修改部署权限或仓库可见性。
 
-## 内容状态
+## 页面与浏览方式
 
-仅以下项目名称由本人确认：**LensFocus**、**掌上办公平台**。问题、角色、贡献、项目阶段、研究、决策、原型和成果尚未提供，全部标记为“待补充”。首页的图形是案例结构示意，不是产品截图。
+- `index.html`：简短首页、双项目入口；按钮跳转到案例或实验室，不把所有内容铺成长页面。
+- `lensfocus.html`：LensFocus，摄影小程序案例。
+- `zhangshangbang.html`：掌上帮，办公软件案例。保留原名“掌上办公平台”作为数据别名。
+- `about.html`：个人介绍、工作方法、六项能力的案例证据入口、GitHub 联系方式。
+- `lab.html`：独立 Product Thinking Lab，保留原有三种目标 × 两种输入方案比较。
+- `case-study.html` + `legacy.js`：保留旧 `?project=lensfocus` / `?project=office` 链接和证据锚点，转到新案例。
 
-首页“决策实验”是独立的**演示原型**，比较首次输入体验的两种假设方案，不是任一项目的真实决策，也没有测量数据。请在有真实依据后再替换。网站没有机器人、追踪、表单提交或后台服务。
+每个案例有六章：Overview、Research、Solution、PRD & Prototype、Built Product、Reflection。**点击章节会导航到单独的 URL 视图，每次只显示一章**，例如 `lensfocus.html?section=requirements#case-view`，支持分享、刷新、浏览器返回和前后章节跳转。原有十项证据结构没有删除，分别组织到六章中。细节按钮只展开当前章。
 
-## 文件结构
+旧首页 `#decision` / `#lab` 自动转到 `lab.html`，`#about` 转到 `about.html`；`#projects` 继续作为项目入口。
 
-- `index.html`：四个首页区块、恰好两个项目入口、方法与 GitHub 联系链接。
-- `styles.css`：暖白、电蓝、编辑式排版；共享案例样式；700px/1000px 响应式规则；reduced-motion 支持。
-- `projects.js`：两个项目的基本资料、十项案例结构、逐项目内容覆盖。
-- `case-study.html`：共用案例页，使用 `?project=lensfocus` 或 `?project=office` 选择项目。
-- `app.js`：两种方案 × 三个目标的定性比较；案例渲染、目录定位、全部展开、项目间导航。
-- `.nojekyll`：按普通静态文件发布。
+## 视觉与交互
 
-## 怎样填项目资料
+- `styles.css`：CSS variables 管理颜色、系统字体、最大宽度和基础间距；暖白、深色正文、克制蓝色；统一导航、按钮、页脚、图片组件。
+- 首页紧凑双项目布局；LensFocus 使用纵向图稿布局，掌上帮使用横向架构、流程布局。
+- 移动菜单支持 Enter、Tab、Escape，页面状态使用 `aria-current`。
+- 图片点击打开原生 dialog；支持关闭按钮、Escape、双向焦点循环、关闭后焦点恢复。
+- 图片预览支持适应窗口、150% / 200% / 300% / 400% 缩放，画布可滚动，保持原始比例。
+- 达到缩放边界后将焦点保留在可用控件上。
+- 图片有 alt、尺寸、异步解码；首屏案例主图优先加载，其余懒加载。
+- 尊重 reduced-motion；手机不启用进入动画。章节动效不负责隐藏重要内容。
+- HTML 包含正文和证据字段，脚本失败时仍可阅读；章节单视图、菜单折叠和图片预览由脚本增强。
 
-1. 在 `projects.js` 的 `PORTFOLIO_PROJECTS` 中填写状态、角色、贡献。不要把“资料待补充”误当成真实项目尚未上线。
-2. 在 `CASE_CONTENT.lensfocus` 或 `CASE_CONTENT.office` 中按段落 ID 增加真实资料。每项支持 `summary` 和 `fields`，字段名称与 `CASE_SECTIONS` 中保持一致。
+## 已确认与待补充
+
+已确认：LensFocus 是摄影小程序，掌上帮是办公软件。具体功能、项目状态、角色、贡献、研究、流程、结果与反思均待补充。不根据产品名称推测功能，不虚构指标或成果。
+
+`assets/placeholder-*.svg` **全部是标明“非真实产品界面或图稿”的素材占位**，不是产品截图。它们用于使画廊及缩放组件在没有真实素材时仍可使用，不代表已完成产品。实验室比较同样标注为演示假设，不代表两个项目的真实决策。
+
+需要补充的真实资料：
+
+1. 两个项目的代表性产品截图、核心原型图及简短设计解释。
+2. LensFocus 的需求研究、竞品比较、模块关系、PRD 和实际产品界面。
+3. 掌上帮的功能架构、业务流程（节点、分支、状态）、PRD 和实际产品界面。
+4. 项目阶段、个人贡献、可公开的研究依据、评估结果及限制。
+
+仅保留已确认的 GitHub 联系链接，没有新增私人联系方式或个人信息。
+
+## 如何维护内容
+
+页面是预生成的静态 HTML。**修改 `projects.js` 或模板后，在仓库目录运行：**
+
+```sh
+node tools/build.cjs
+```
+
+不需要安装依赖。将生成后的 HTML 连同源码提交即可，GitHub Pages 无需运行 Node。
+
+- 项目基本资料：`projects.js` 的 `PORTFOLIO_PROJECTS`。
+- 案例字段：`CASE_CONTENT.lensfocus` / `CASE_CONTENT.office`，使用原有十项 `CASE_SECTIONS` 的段落 ID、摘要及字段名。缺失值继续显示“待补充”。
+- 页面布局、章节摘要及首页文案：`tools/build.cjs`。
+- 交互：`app.js`。
+- 图片：在 `projects.js` 的 `media` 中替换路径、标题、说明、alt、原始 width / height，并将 `kind` 从 `placeholder` 改为 `actual`。图片放入 `assets/`，不要删除仍被其他槽位引用的占位文件。真实图片优先使用适当尺寸的 WebP / JPEG / PNG。
+
+例如：
 
 ```js
-window.CASE_CONTENT = {
-  lensfocus: {
-    problem: {
-      summary: '填写实际的用户问题摘要',
-      fields: {
-        '目标用户': '填写真实目标用户',
-        '使用情境': '填写真实使用情境'
-      }
-    }
-  },
-  office: {}
+{ id: 'hero', src: 'assets/lensfocus-home.webp', width: 750, height: 1334,
+  title: '实际页面标题', caption: '真实的页面目的与设计说明',
+  alt: '准确描述截图内容', kind: 'actual' }
+```
+
+槽位 ID 不变。填写真实图稿后，同步更新模板中的“当前为占位”提示以及案例说明；别把混合状态的图组整体标为已完成。
+
+案例覆盖示例：
+
+```js
+window.CASE_CONTENT.lensfocus.research = {
+  summary: '填写真实研究摘要',
+  fields: { '研究方法与样本': '填写实际方法和样本范围' }
 };
 ```
 
-缺少的字段会继续显示“待补充”。内容作为纯文本渲染，不会执行 HTML；截图/真实原型需要在 `app.js` 中的 `prototype` 段插入语义化图片或有效链接，图片应有 alt 文本、尺寸及必要说明，不放入凭证或内部资料。
-
-3. 同步更新 `index.html` 两张卡片的问题、角色、挑战、状态和导读，保持首页与案例一致。目前首页是静态 HTML，以便无 JavaScript 时仍可浏览。
-4. 资料齐备后，更新 `case-study.html` 的摘要、提示及状态标签；若两个项目进度不同，请改为逐项目数据驱动，避免移除另一项目的缺失提示。
-5. 有真实研究后，再替换 `app.js` 的 `options`、`fits` 和首页决策背景。未验证前保留“演示原型”和验证局限，不把假设写成结果。
-6. 添加联系渠道时只使用你希望公开、且验证过的地址。目前仅使用既有 GitHub 主页。
-
-十项段落：概览、问题、研究、洞察、备选方案、决策、交互原型、实现贡献、评估限制、复盘。目录支持直接链接，例如 `case-study.html?project=lensfocus#research`；深层链接会自动展开对应段落。
+所有数据均以转义文本生成，不能直接插入 HTML。需要复杂结构时修改模板；只放公开、可验证的材料。
 
 ## 本地预览与发布
 
-在本目录启动静态服务器，例如：
+在仓库根目录启动：
 
 ```sh
 python -m http.server 8765 --bind 127.0.0.1
 ```
 
-打开 `http://127.0.0.1:8765/`。不要只用 file URL 判断 Pages 导航是否正常。
+访问 `http://127.0.0.1:8765/`。发布方式仍为 Settings → Pages → Deploy from a branch → main → / (root)，保留 `.nojekyll`。提交静态文件即可部署。若看到旧版，可强制刷新。
 
-提交上述文件到 `main` 根目录即可自动部署。在仓库 Settings → Pages 确认 `Deploy from a branch`、`main`、`/ (root)`。不需要依赖安装或 Actions 自定义构建。发布后访问主页、两个案例与深层链接确认最新内容；旧缓存可用强制刷新清除。
+## 验证
 
-## 验证记录
-
-- JavaScript 语法检查通过。
-- 本地浏览器渲染通过；桌面、768px 平板、390px 手机和320px窄屏检查，无横向溢出。
-- 六组目标/方案组合更新流程、收益、代价、适配说明及验证方法。
-- 两个案例各含十段结构；逐项展开、全展开/收起、目录深层链接和项目切换通过。
-- Enter/Space 操作案例按钮、Enter 操作详情与方案按钮通过；焦点样式清晰。
-- CSS 针对 `prefers-reduced-motion: reduce` 关闭平滑滚动、动画和过渡；默认内容不依赖动画或 hover 才可见。
-- 无效项目 ID 显示返回提示，不误加载其他项目；控制台未见 JavaScript 错误。
-
-此版本交付的是可用框架。真实项目证据、截图、结果及各项目专属演示仍待补充，不声称已完成两篇真实案例。
+JavaScript 语法、静态链接与资源路径、桌面/平板/手机布局、菜单键盘操作、图片缩放/关闭/焦点管理、案例深层链接、实验室六组比较均进行检查。部署后还需确认 GitHub Pages 构建成功及线上页面可访问。没有引入机器人、跟踪、登录或后台服务。
