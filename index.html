@@ -1,81 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Jiale531 的个人作品集，记录作品、实践与成长。">
-  <title>Jiale531 · 个人作品集</title>
-  <style>
-    :root { color-scheme: light; --ink: #182b3a; --muted: #617180; --accent: #176d68; }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: #f7f9f8; color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; line-height: 1.8; }
-    a { color: var(--accent); text-underline-offset: 5px; }
-    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
-    .container { width: min(960px, 88%); margin: auto; }
-    header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 28px 0; }
-    .brand { font-weight: 750; color: var(--ink); text-decoration: none; }
-    nav { display: flex; gap: 24px; }
-    nav a { font-size: 14px; text-decoration: none; }
-    .hero { padding: 90px 0 76px; }
-    .eyebrow { color: var(--accent); letter-spacing: 3px; font-size: 12px; font-weight: 700; }
-    h1 { font-size: clamp(36px, 7vw, 64px); line-height: 1.25; letter-spacing: -1px; margin: 20px 0; }
-    h2 { font-size: 26px; margin: 0 0 24px; }
-    h3 { font-size: 20px; margin: 16px 0 8px; }
-    p { color: var(--muted); margin: 0 0 20px; }
-    .intro { max-width: 560px; font-size: 18px; }
-    .button { display: inline-block; margin-top: 12px; background: var(--accent); color: white; padding: 10px 22px; border-radius: 8px; text-decoration: none; }
-    section { padding: 36px 0; scroll-margin-top: 24px; }
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-    .card { background: white; border: 1px solid #dde6e2; border-radius: 14px; padding: 28px; }
-    .tag { font-size: 12px; color: var(--accent); background: #eaf4ef; padding: 4px 10px; border-radius: 20px; }
-    .card p { margin-bottom: 0; font-size: 15px; }
-    .about { max-width: 660px; }
-    footer { border-top: 1px solid #dde6e2; margin-top: 48px; padding: 24px 0 36px; color: var(--muted); font-size: 13px; }
-    @media (max-width: 600px) { .hero { padding: 55px 0 44px; } .grid { grid-template-columns: 1fr; } nav { gap: 18px; } }
-  </style>
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Jiale531 的 AI 产品实验室：LensFocus、掌上办公平台与产品决策演示。"><title>Jiale531 — AI Product Lab</title><link rel="stylesheet" href="styles.css"><script defer src="app.js"></script></head>
 <body>
-  <div class="container">
-    <header>
-      <a class="brand" href="./">Jiale531 / Portfolio</a>
-      <nav aria-label="主导航">
-        <a href="#projects">作品</a>
-        <a href="#about">关于</a>
-        <a href="https://github.com/Jiale531">GitHub ↗</a>
-      </nav>
-    </header>
-    <main>
-      <div class="hero">
-        <span class="eyebrow">HELLO, WORLD</span>
-        <!-- 在这里修改你的名字和个人简介 -->
-        <h1>你好，我是 Jiale531。<br>欢迎来到我的作品集。</h1>
-        <p class="intro">这里记录我的作品、实践与成长。<br>保持好奇，把想法一步步变成现实。</p>
-        <a class="button" href="#projects">浏览我的作品 ↓</a>
-      </div>
-      <section id="projects" aria-labelledby="projects-title">
-        <h2 id="projects-title">精选作品</h2>
-        <!-- 将下方占位内容替换成真实作品；可复制 article 添加更多作品 -->
-        <div class="grid">
-          <article class="card">
-            <span class="tag">准备中</span>
-            <h3>我的第一个作品</h3>
-            <p>这里将展示项目的背景、我的贡献，以及最终成果。作品即将上线。</p>
-          </article>
-          <article class="card">
-            <span class="tag">准备中</span>
-            <h3>更多探索与实践</h3>
-            <p>这里将分享新的尝试、学习记录和有趣的小项目。敬请期待。</p>
-          </article>
-        </div>
-      </section>
-      <section id="about" aria-labelledby="about-title">
-        <h2 id="about-title">关于我</h2>
-        <p class="about">我喜欢学习新事物，也享受创造的过程。这个网站是我的个人展示空间，未来会持续更新更多作品和故事。</p>
-        <a href="https://github.com/Jiale531">在 GitHub 上找到我 ↗</a>
-      </section>
-    </main>
-    <footer>© Jiale531 · 持续学习，持续创造。</footer>
-  </div>
-</body>
-</html>
+<a class="skip" href="#main">跳到主要内容</a>
+<header class="wrap site-header"><a class="brand" href="./"><span class="brand-icon">j.</span> JIALE531 <span class="brand-sub">/ PRODUCT LAB</span></a><nav aria-label="主导航"><a href="#projects">项目 <small>02</small></a><a href="#decision">决策实验</a><a href="#about">方法与联系</a></nav></header>
+<main id="main">
+<section class="wrap hero" aria-labelledby="hero-title">
+<div><p class="eyebrow">● ASPIRING AI PRODUCT BUILDER</p><h1 id="hero-title">I build AI products<br>by making <em>better<br>decisions.</em></h1><p class="hero-cn">不只展示做了什么，更打开每一步的思考。</p><p class="muted intro">我是 Jiale531，正在探索 AI 产品经理与产品构建者的路径。<br>两个项目，一间持续迭代的产品实验室。</p><a class="button" href="#projects">探索两个项目 <span>↗</span></a><a class="hero-secondary" href="#decision">先试一次产品决策 ↓</a></div>
+<aside class="lab-note" aria-label="产品思考笔记"><div class="note-top"><span>FIELD NOTES</span><span>001 / OPEN LAB</span></div><p class="hand-note">What makes<br>a decision <em>better?</em></p><div class="note-diagram"><span>用户问题</span><b>↓</b><span class="blue">证据 → 取舍 → 决策</span><b>↓</b><span>构建 · 评估 · 再学习</span></div><p class="small muted">先把假设放到桌面上，<br>再决定要做什么。</p><span class="note-stamp">THINK → TEST → LEARN</span></aside>
+<div class="hero-bottom"><span>DON’T JUST READ MY WORK. EXPLORE HOW I THINK.</span><span>SCROLL TO EXPLORE ↓</span></div>
+</section>
+<section class="wrap section" id="projects" aria-labelledby="projects-title"><div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 id="projects-title">两个项目，<br>两份思考档案<span class="blue">。</span></h2></div><p class="section-aside">名称已确认，案例资料待补充。<br>这里展示的是可继续填写的案例框架。</p></div>
+<div class="project-grid">
+<article class="project-card"><div class="project-art art-one" aria-label="LensFocus 案例结构示意，非产品截图"><span class="art-label">CASE FILE / 01</span><div class="focus-orbit"><div>LensFocus<small>问题 → 证据 → 决策</small></div></div><span class="art-foot">NARRATIVE MAP · 非产品截图</span></div><div class="project-content"><div class="card-meta"><span>PROJECT 01</span><span class="status">资料待补充</span></div><h3><a href="case-study.html?project=lensfocus">LensFocus <span>↗</span></a></h3><p class="project-problem">探索的问题：<strong>待补充</strong></p><dl class="project-facts"><div><dt>角色与贡献</dt><dd>待补充</dd></div><div><dt>核心产品挑战</dt><dd>待补充</dd></div></dl><p class="card-explore">沿「问题 → 证据 → 决策」阅读十项案例结构。</p><a class="card-link" href="case-study.html?project=lensfocus">打开案例框架 <span>↗</span></a></div></article>
+<article class="project-card project-two"><div class="project-art art-two" aria-label="掌上办公平台证据框架示意，非产品截图"><span class="art-label">CASE FILE / 02</span><div class="paper-stack"><div class="paper-front"><small>产品档案</small><strong>掌上办公平台</strong><div>□ 用户问题 <span>待补充</span></div><div>□ 关键决策 <span>待补充</span></div><div>□ 结果证据 <span>待补充</span></div></div></div><span class="art-foot">EVIDENCE MAP · 非产品截图</span></div><div class="project-content"><div class="card-meta"><span>PROJECT 02</span><span class="status">资料待补充</span></div><h3><a href="case-study.html?project=office">掌上办公平台 <span>↗</span></a></h3><p class="project-problem">探索的问题：<strong>待补充</strong></p><dl class="project-facts"><div><dt>角色与贡献</dt><dd>待补充</dd></div><div><dt>核心产品挑战</dt><dd>待补充</dd></div></dl><p class="card-explore">展开研究、实现与评估，检查叙述背后的依据。</p><a class="card-link" href="case-study.html?project=office">打开案例框架 <span>↗</span></a></div></article>
+</div></section>
+<section class="decision-section" id="decision" aria-labelledby="decision-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">02 / THE DECISION ROOM</p><h2 id="decision-title">如果由你来决定？</h2></div><span class="prototype-label">演示原型 · 非真实项目决策</span></div><div class="decision-intro"><p>假设：为一个 AI 工具设计第一次使用体验。</p><p class="muted">自由输入，还是引导式输入？切换方案，比较它们在不同目标下的取舍。以下为定性推理，尚未经用户研究验证，也不代表这两个项目的实际方案。</p></div>
+<div class="decision-workbench"><div class="decision-controls"><label for="decision-goal">你优先解决什么？</label><select id="decision-goal"><option value="start">帮助新用户开始</option><option value="flexibility">支持多样化任务</option><option value="reliability">减少遗漏信息</option></select><p class="control-label">选择输入方案</p><div class="choice-buttons" role="group" aria-label="比较输入方案"><button type="button" data-approach="guided" aria-pressed="true">A <span>引导式输入</span> ↗</button><button type="button" data-approach="open" aria-pressed="false">B <span>自由输入</span> ↗</button></div><p class="small muted">没有绝对更好的方案，只有与目标更匹配、能被验证的选择。</p></div>
+<div class="decision-output" aria-live="polite" aria-atomic="true"><p class="eyebrow" id="decision-output-label">A / GUIDED INPUT</p><h3 id="decision-output-title">先降低「不知道怎么问」的门槛。</h3><div class="flow" id="decision-flow"><span>选择任务</span><b>→</b><span>补齐信息</span><b>→</b><span>预览并提交</span></div><dl class="tradeoffs"><div><dt>收益</dt><dd id="decision-benefit">通过明确步骤和示例，帮助新用户组织需求。</dd></div><div><dt>代价</dt><dd id="decision-cost">步骤增加；预设任务可能限制复杂或非典型需求。</dd></div><div><dt>与目标的关系</dt><dd id="decision-fit">倾向先测试引导式：让新用户知道下一步做什么，但仍需验证步骤是否过多。</dd></div><div><dt>如何验证</dt><dd id="decision-test">对比首次任务完成率、放弃位置，以及用户能否解释输入要求；当前没有测量结果。</dd></div></dl><p class="decision-verdict">下一步不是直接上线，而是让目标用户完成同一项任务。</p></div></div><noscript><p class="notice">开启 JavaScript 后可切换比较。方案 A 引导降低起步门槛，但增加步骤；方案 B 自由输入更灵活，但需要用户组织需求。两者均需验证。</p></noscript></div></section>
+<section class="wrap section" id="about" aria-labelledby="about-title"><div class="section-heading"><div><p class="eyebrow">03 / HOW I WORK</p><h2 id="about-title">让思考可见，<br>也让结论可被追问。</h2></div><p class="section-aside">这是我希望坚持的工作方式。<br>项目证据尚待补充，不把方法当成果。</p></div>
+<ol class="process"><li><span>01 / DISCOVER</span><h3>发现</h3><p>先问问题来自哪里。</p><a href="case-study.html?project=lensfocus#research">查看研究证据栏 ↗</a></li><li><span>02 / DECIDE</span><h3>取舍</h3><p>把收益和代价一起摆出来。</p><a href="#decision">试用方案比较 ↗</a></li><li><span>03 / BUILD</span><h3>构建</h3><p>做足够小、可以被检验的版本。</p><a href="case-study.html?project=office#implementation">查看实现与贡献栏 ↗</a></li><li><span>04 / EVALUATE</span><h3>评估</h3><p>区分推测和观察到的结果。</p><a href="case-study.html?project=office#evaluation">查看评估与限制栏 ↗</a></li><li><span>05 / LEARN</span><h3>学习</h3><p>把不确定性变成下一次行动。</p><a href="case-study.html?project=lensfocus#reflection">查看复盘栏 ↗</a></li></ol>
+<div class="contact"><div><p class="eyebrow">LET’S KEEP EXPLORING</p><h2>下一个好问题，<br>从交流开始<span class="blue">↗</span></h2></div><a class="button" href="https://github.com/Jiale531">在 GitHub 找到我 <span>↗</span></a></div></section>
+</main><footer class="wrap site-footer"><span>© Jiale531 / AI PRODUCT LAB</span><span>两个项目 · 持续迭代 · 证据优先</span><a href="#main">回到顶部 ↑</a></footer>
+</body></html>
